@@ -40,6 +40,10 @@ import frame24 from "./serverComponentsSlides/frame24.avif";
 import frame25 from "./serverComponentsSlides/frame25.avif";
 import frame26 from "./serverComponentsSlides/frame26.avif";
 
+import slide1 from "./react19-slides/slide1.jpg";
+import slide2 from "./react19-slides/slide2.png";
+import slide3 from "./react19-slides/slide3.jpg";
+
 import Demo1 from "./codeDemos/Demo1";
 import Demo2 from "./codeDemos/Demo2";
 import Demo3 from "./codeDemos/Demo3";
@@ -1086,6 +1090,460 @@ Now it is also supported with server side rendering
 ---
 
 <img src={frame26} width="80%" />
+
+---
+
+### Imporving Rendering
+
+---
+
+<img src={slide1} />
+
+---
+
+<img src={slide2} width="80%" />
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem />
+        <SearchTodo />
+        <TodoList todos={todos} />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} />
+        <SlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} />
+        <SlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+const MemoedAddTodoItem = React.memo(AddTodoItem);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+const MemoedAddTodoItem = React.memo(AddTodoItem);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <MemoedAddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+const MemoedAddTodoItem = React.memo(AddTodoItem);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = useCallback((name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  }, []);
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <MemoedAddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+</CodeSurfer>
+
+---
+
+### Manual Optimisations
+
+- React.Memo
+- useCallback
+- useMemo
+
+---
+
+### React 19
+
+- <s>React.Memo</s>
+- <s>useCallback</s>
+- <s>useMemo</s>
+
+---
+
+<img src={slide3} />
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+const MemoedSearchTodo = React.memo(SearchTodo);
+const MemoedSlowComponent = React.memo(SlowComponent);
+const MemoedAddTodoItem = React.memo(AddTodoItem);
+
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = useCallback((name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  }, []);
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <MemoedAddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = useCallback((name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  }, []);
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <MemoedAddTodoItem addItem={addItem} />
+        <MemoedSearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <MemoedSlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = useCallback((name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  }, []);
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <SlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js 4,9
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = useCallback((name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  }, []);
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <SlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+```js
+export const TodoApp = () => {
+  const [todos, setTodos] = useState(getInitialList());
+
+  const addItem = (name) => {
+    setTodos((prevTodos) => [
+      { id: prevTodos.length + 1, name: name },
+      ...prevTodos,
+    ]);
+  };
+
+  const deleteItem = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+  };
+
+  return (
+    <main>
+      <section>
+        <AddTodoItem addItem={addItem} />
+        <SearchTodo />
+        <TodoList todos={todos} deleteItem={deleteItem} />
+        <SlowComponent />
+      </section>
+    </main>
+  );
+};
+```
+
+</CodeSurfer>
 
 ---
 
